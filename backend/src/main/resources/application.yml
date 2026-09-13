@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dba-monitor
+  # No se define spring.datasource: las conexiones al SGBD se administran
+  # dinamicamente desde ProveedorConexiones para permitir cambiar de
+  # instancia en tiempo de ejecucion sin recompilar (criterio de la rubrica).
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+dba:
+  origenes-permitidos: http://localhost:5173
+  perfil-inicial: local
+  conexiones:
+    - nombre: local
+      descripcion: Instancia local de desarrollo
+      host: ${SQLSERVER_HOST:localhost}
+      puerto: ${SQLSERVER_PUERTO:1433}
+      instancia: ${SQLSERVER_INSTANCIA:}
+      base-datos: ${SQLSERVER_BD:DataSolutions}
+      usuario: ${SQLSERVER_USUARIO:dba_monitor}
+      contrasena: ${SQLSERVER_CONTRASENA:}
+      cifrado: true
+      confiar-certificado-servidor: true
+
+logging:
+  level:
+    cr.ac.una.eif402.dbamonitor: INFO

@@ -1,0 +1,31 @@
+# Plantilla de configuracion. Copiela como application-local.yml o exporte
+# las variables de entorno equivalentes. Este archivo SI puede versionarse
+# porque no contiene credenciales reales.
+#
+#   export SQLSERVER_HOST=192.168.1.20
+#   export SQLSERVER_PUERTO=1433
+#   export SQLSERVER_BD=DataSolutions
+#   export SQLSERVER_USUARIO=dba_monitor
+#   export SQLSERVER_CONTRASENA=**********
+dba:
+  perfil-inicial: local
+  conexiones:
+    - nombre: local
+      descripcion: Instancia local de desarrollo
+      host: localhost
+      puerto: 1433
+      base-datos: DataSolutions
+      usuario: dba_monitor
+      contrasena: CAMBIAR
+      cifrado: true
+      confiar-certificado-servidor: true
+    - nombre: laboratorio
+      descripcion: Instancia nombrada del laboratorio
+      host: 10.0.0.15
+      puerto: 1433
+      instancia: SQLEXPRESS
+      base-datos: DataSolutions
+      usuario: dba_monitor
+      contrasena: CAMBIAR
+      cifrado: true
+      confiar-certificado-servidor: true
