@@ -1,5 +1,5 @@
 /* =========================================================================
-   04_sample_data.sql
+   05_sample_data.sql
    Datos de prueba: roles, usuarios, tipos de puntuación, equipos,
    una quiniela con partidos, inscripciones y pronósticos.
 
@@ -135,8 +135,6 @@ VALUES
     (@u3, @p3, 0, 2);  -- acierta marcador exacto
 GO
 
-ENABLE TRIGGER quiniela.tr_Pronostico_BloquearPartidoIniciado ON quiniela.Pronostico;
-GO
 
 /* Recalcular los puntajes de los partidos finalizados */
 DECLARE @id INT;
@@ -151,6 +149,9 @@ BEGIN
 END
 CLOSE cur;
 DEALLOCATE cur;
+GO
+
+ENABLE TRIGGER quiniela.tr_Pronostico_BloquearPartidoIniciado ON quiniela.Pronostico;
 GO
 
 PRINT 'Datos de prueba cargados y puntajes calculados.';
