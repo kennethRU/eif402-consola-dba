@@ -109,7 +109,7 @@ export default function ModuloRespaldos({ controles }) {
               ]}
               filas={datos.ejecucionesJobs}
               claveFila={(fila, indice) => indice}
-              mensajeVacio="No hay jobs de respaldo registrados. En SQL Server Express el Agente SQL Server no esta disponible."
+              mensajeVacio="No hay jobs de respaldo programados en el Agente SQL Server."
             />
           </Panel>
         </>
