@@ -27,3 +27,4 @@ Thumbs.db
 
 # Bitacoras
 *.log
+.claude/
