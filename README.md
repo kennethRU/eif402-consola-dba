@@ -35,7 +35,7 @@ repartirse entre los integrantes sin conflictos de merge.
 
 ## Requisitos
 
-- **JDK 25** o superior
+- **JDK 17** o superior (el proyecto compila con `release 17`; probado con JDK 21)
 - **Maven 3.9+**
 - **Node.js 18+** y npm
 - **SQL Server 2017 o superior** (Express sirve; ver limitaciones más abajo)
@@ -157,9 +157,10 @@ contra un patrón antes de enviarse. Toda ejecución queda en `dba.bitacora_mant
 ## Estructura del repositorio
 
 ```
-dba-monitor/
+eif402-consola-dba/
+├── db/                       Base de ejemplo QuinielasDB (opcional)
 ├── sql/                      Scripts de instalación y catálogo de consultas
-├── backend/                  Spring Boot (Java 25, patrón MVC por capas)
+├── backend/                  Spring Boot (Java 17, patrón MVC por capas)
 │   └── src/main/java/cr/ac/una/eif402/dbamonitor/
 │       ├── config/           Propiedades externas y CORS
 │       ├── common/           Repositorio base y manejo global de errores
@@ -176,7 +177,7 @@ dba-monitor/
 │       ├── components/       Componentes reutilizables
 │       ├── hooks/            useRecurso (carga, error, refresco)
 │       └── pages/            Una vista por módulo
-└── docs/                     Reparto de trabajo y guía de defensa
+└── docs/                     Manual de usuario, evidencias, bitácora y presentación
 ```
 
 ---
@@ -202,7 +203,7 @@ dba-monitor/
 
 ## Correcciones aplicadas tras la primera ejecución real
 
-Estos dos problemas solo aparecieron al conectar la herramienta contra una
+Estos problemas solo aparecieron al conectar la herramienta contra una
 instancia real. Vale la pena poder explicarlos en la defensa.
 
 ### 1. Tipo `smallint` mapeado como `Short`, no como `Integer`
@@ -243,3 +244,26 @@ configuración de lo que observa.
 
 El mismo tratamiento se aplicó a las comparaciones entre `msdb.dbo.backupset`
 y `sys.databases` de los módulos 3 y 4, que son vulnerables al mismo problema.
+
+### 3. Permiso que no se hereda
+
+`sys.sql_expression_dependencies` reside en la base de recursos del sistema
+(`mssqlsystemresource`) y exige un `GRANT SELECT` explícito para `dba_monitor`.
+`VIEW DEFINITION` no alcanza, ni concedido sobre el esquema ni sobre la base.
+
+### 4. Pseudo-tablas reportadas como dependencias rotas
+
+`inserted` y `deleted` solo existen mientras se ejecuta un trigger, así que el
+catálogo las registra como referencias sin objeto. Se excluyen con
+`NOT IN (N'inserted', N'deleted')` para no generar falsos positivos en el módulo 5.
+
+---
+
+## Documentación del proyecto
+
+| Documento | Contenido |
+|---|---|
+| [`docs/manual-de-usuario.md`](docs/manual-de-usuario.md) | Instalación y uso de cada módulo |
+| [`docs/evidencias-de-pruebas.md`](docs/evidencias-de-pruebas.md) | Casos de prueba, resultados y defectos corregidos |
+| [`docs/bitacora-de-seguimiento.md`](docs/bitacora-de-seguimiento.md) | Registro de avances por integrante |
+| `docs/Presentacion_EIF402_Grupo2.pptx` | Presentación de la exposición |
