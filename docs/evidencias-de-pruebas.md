@@ -42,6 +42,8 @@ la prueba como nombre (por ejemplo, `P-13.png`).
 | P-15 | M6 | Recrear la tabla y pulsar «Recompilar pendientes» | La vista se corrige y desaparece de la lista; la acción queda en la bitácora | «Recompilados 1 de 1 objeto(s)»; «Objetos inválidos» = 0; bitácora: RECOMPILACION · EXITOSO · 20 ms (`P-15_M6_recompilacion.pdf`) | Aprobada |
 | P-16 | M6 | «Recalcular estadísticas» sobre `quiniela.Rol` | La operación termina y queda en «Bitácora de mantenimiento» | Ejecutó `UPDATE STATISTICS [quiniela].[Rol];` en 27 ms; bitácora: ESTADISTICAS [quiniela].[Rol] · EXITOSO; `PK_Rol` salió de la lista de desactualizadas (`P-16_M6_estadisticas.pdf`) | Aprobada |
 | P-17 | M6 | Escribir `Rol;--` como nombre de tabla | La solicitud se rechaza sin ejecutar nada en la base | «El nombre de tabla 'Rol;--' no es un identificador válido»; ninguna fila nueva en la bitácora (`P-17_M6_identificador_invalido.pdf`) | Aprobada |
+| P-19 | M1 | Verificar la hora de inicio tras la corrección O-01 | «Inicio» coincide con el último arranque del panel de servicios | Ambos indican 25/10/2026, 06:44 p. m. (`P-19_M1_hora_local.pdf`) | Aprobada |
+| P-20 | M5 | Verificar el detalle de sysadmin tras la corrección O-02 | Se distingue la pertenencia directa de la pertenencia por grupo | `NT AUTHORITY\SYSTEM` aparece como «Sí (vía grupo)»; diagnóstico: «4 logins tienen privilegios sysadmin (1 por pertenencia a grupo)» (`P-20_M5_sysadmin.pdf`) | Aprobada |
 | P-18 | M6 | Escribir un esquema inexistente (`quinela`) | Error controlado, sin caída de la consola | Mensaje «operación fallida: la instancia rechazó la consulta administrativa»; la consola sigue operando. Ver observaciones O-04 y O-05 (`P-18_M6_esquema_inexistente.pdf`) | Aprobada |
 
 ---
@@ -84,8 +86,8 @@ corregir en una versión posterior.
 
 | Código | Módulo | Observación |
 |---|---|---|
-| O-01 | Todos | Las horas leídas del servidor (inicio en M1, última ejecución en M2, fechas de la bitácora en M6) se muestran en UTC, la zona del contenedor, y no en la hora local (UTC−6). Ejemplo: M1 indica inicio «26/10, 12:44 a. m.» mientras el panel de servicios indica «25/10, 06:44 p. m.». |
-| O-02 | M5 | El indicador «Miembros de sysadmin» y la tabla de logins cuentan 4 (incluye `NT AUTHORITY\SYSTEM`), pero el panel «Roles y miembros» lista 3 asignaciones directas al rol sysadmin. |
+| O-01 | Todos | **Corregida.** Las horas leídas del servidor se mostraban en UTC, la zona del contenedor, en lugar de la hora local (UTC−6): M1 indicaba inicio «26/10, 12:44 a. m.» y el panel de servicios «25/10, 06:44 p. m.». Ahora el backend consulta el desfase del servidor (`DATEDIFF(MINUTE, GETUTCDATE(), GETDATE())`) y envía las fechas con zona horaria; verificado en P-19. |
+| O-02 | M5 | **Corregida.** El indicador contaba 4 sysadmin (pertenencia efectiva, `IS_SRVROLEMEMBER`) y el panel de roles listaba 3 (solo asignaciones directas). Se conserva el conteo efectivo y ahora la consola distingue «Sí» de «Sí (vía grupo)», con una nota en el panel de roles; verificado en P-20. |
 | O-03 | M2 | El orden por lecturas, CPU o duración usa los valores acumulados, pero la tabla muestra promedios por ejecución; el orden es correcto aunque no lo parezca a simple vista. |
 | O-04 | M6 | Una operación que SQL Server rechaza (P-18) no se registra en `dba.bitacora_mantenimiento`; solo se registran las que llegan a ejecutarse. |
 | O-05 | M6 | El mensaje de error ante un esquema inexistente es genérico y no indica la causa. |

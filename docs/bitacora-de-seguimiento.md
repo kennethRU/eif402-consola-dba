@@ -47,6 +47,7 @@ subió su trabajo desde su propia cuenta.
 | 25 oct 2026 | Equipo | Prueba integral desde el repositorio clonado: compila 35 archivos y los seis módulos muestran datos reales | — |
 | 25 oct 2026 | Kenneth Ramírez | Manual de usuario, bitácora, evidencias de pruebas y presentación agregados a `docs/`; README corregido | `a6fd163` a `2df5f51` |
 | 25–26 oct 2026 | Kenneth Ramírez | Ejecución de las pruebas pendientes: Bloque C (dependencia rota, validación y recompilación), bloqueo entre sesiones, ordenamiento, capturas de almacenamiento, recálculo de estadísticas y validación de identificadores. 17 pruebas funcionales aprobadas, 6 observaciones registradas | — |
+| 26 oct 2026 | Kenneth Ramírez | Corrección de dos observaciones: fechas del servidor mostradas en UTC (O-01) y distinción entre sysadmin directo y por grupo (O-02). Verificadas en P-19 y P-20 | — |
 
 ---
 
