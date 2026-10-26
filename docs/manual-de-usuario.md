@@ -218,7 +218,9 @@ pendientes, y revisarla si lleva más de 30 días sin actualizarse. Para índice
 desde 30 % de fragmentación, **REORGANIZE** entre 10 % y 30 %, sin acción por debajo de 10 %.
 
 Los nombres de esquema y tabla se validan antes de enviarse; un nombre con caracteres no
-permitidos se rechaza. Toda acción queda registrada en la bitácora de mantenimiento.
+permitidos se rechaza antes de llegar a la base. Toda acción que llega a ejecutarse queda
+registrada en la bitácora de mantenimiento; las que el gestor rechaza (por ejemplo, un esquema
+inexistente) muestran un mensaje de error pero no se registran.
 
 **Ejemplo de uso de «Validar» y «Recompilar»:** si una vista depende de una tabla que fue
 eliminada, M5 la muestra como dependencia rota; «Validar objetos» la registra como inválida;

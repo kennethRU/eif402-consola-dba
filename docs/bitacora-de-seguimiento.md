@@ -45,6 +45,8 @@ subió su trabajo desde su propia cuenta.
 | 24 oct 2026 | Mariana Villalobos | Ensamblaje de la consola: navegación entre los seis módulos | `76792a1` |
 | 25 oct 2026 | Kenneth Ramírez | Corrección del mensaje de jobs de respaldo vacíos en M4 | `6522b5c` |
 | 25 oct 2026 | Equipo | Prueba integral desde el repositorio clonado: compila 35 archivos y los seis módulos muestran datos reales | — |
+| 25 oct 2026 | Kenneth Ramírez | Manual de usuario, bitácora, evidencias de pruebas y presentación agregados a `docs/`; README corregido | `a6fd163` a `2df5f51` |
+| 25–26 oct 2026 | Kenneth Ramírez | Ejecución de las pruebas pendientes: Bloque C (dependencia rota, validación y recompilación), bloqueo entre sesiones, ordenamiento, capturas de almacenamiento, recálculo de estadísticas y validación de identificadores. 17 pruebas funcionales aprobadas, 6 observaciones registradas | — |
 
 ---
 
@@ -66,7 +68,7 @@ subió su trabajo desde su propia cuenta.
 
 | Fecha | Integrante | Actividad | Estado |
 |---|---|---|---|
-| _Por completar_ | | Subida de la presentación, manual de usuario, evidencias y bitácora a `docs/` | Pendiente |
-| _Por completar_ | | Ensayo de la demostración de objetos inválidos (M5 y M6) | Pendiente |
+| 25 oct 2026 | Kenneth Ramírez | Subida de la presentación, manual de usuario, evidencias y bitácora a `docs/` | Listo |
+| 25 oct 2026 | Kenneth Ramírez | Ensayo de la demostración de objetos inválidos (M5 y M6) | Listo |
 | _Por completar_ | Equipo | Ensayo completo de la presentación (15 minutos) | Pendiente |
 | 3 nov 2026 | Equipo | Presentación y defensa en vivo | Pendiente |
