@@ -5,6 +5,7 @@ import cr.ac.una.eif402.dbamonitor.conexion.ProveedorConexiones;
 import cr.ac.una.eif402.dbamonitor.instancia.InstanciaDtos.*;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,7 +90,7 @@ public class InstanciaRepositorio extends RepositorioAdministrativo {
                 rs.getString("descripcion_version"),
                 rs.getString("intercalacion"),
                 "ONLINE",
-                rs.getTimestamp("fecha_inicio").toLocalDateTime(),
+                aFechaHora(rs.getTimestamp("fecha_inicio")),
                 rs.getLong("segundos_actividad"),
                 null,
                 rs.getInt("cantidad_cpu"),
@@ -105,8 +106,7 @@ public class InstanciaRepositorio extends RepositorioAdministrativo {
                 rs.getString("estado"),
                 rs.getString("tipo_inicio"),
                 rs.getObject("id_proceso") == null ? null : rs.getInt("id_proceso"),
-                rs.getTimestamp("ultimo_arranque") == null
-                        ? null : rs.getTimestamp("ultimo_arranque").toLocalDateTime(),
+                rs.getObject("ultimo_arranque", OffsetDateTime.class),
                 rs.getString("cuenta_servicio")));
     }
 
@@ -118,7 +118,7 @@ public class InstanciaRepositorio extends RepositorioAdministrativo {
                 rs.getString("modelo_recuperacion"),
                 rs.getInt("nivel_compatibilidad"),
                 rs.getString("intercalacion"),
-                rs.getTimestamp("fecha_creacion").toLocalDateTime(),
+                aFechaHora(rs.getTimestamp("fecha_creacion")),
                 rs.getBoolean("solo_lectura"),
                 rs.getBigDecimal("tamano_total_mb")));
     }

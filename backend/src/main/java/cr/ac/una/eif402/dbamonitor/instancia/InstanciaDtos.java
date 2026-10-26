@@ -1,7 +1,7 @@
 package cr.ac.una.eif402.dbamonitor.instancia;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /** Objetos de transferencia del Modulo 1: estado general de la instancia. */
@@ -20,7 +20,7 @@ public final class InstanciaDtos {
             String descripcionVersion,
             String intercalacion,
             String estado,
-            LocalDateTime fechaInicio,
+            OffsetDateTime fechaInicio,
             long segundosActividad,
             String tiempoActividadLegible,
             int cantidadCpu,
@@ -35,7 +35,7 @@ public final class InstanciaDtos {
             String estado,
             String tipoInicio,
             Integer idProceso,
-            LocalDateTime ultimoArranque,
+            OffsetDateTime ultimoArranque,
             String cuentaServicio
     ) { }
 
@@ -46,7 +46,7 @@ public final class InstanciaDtos {
             String modeloRecuperacion,
             int nivelCompatibilidad,
             String intercalacion,
-            LocalDateTime fechaCreacion,
+            OffsetDateTime fechaCreacion,
             boolean soloLectura,
             BigDecimal tamanoTotalMb
     ) { }

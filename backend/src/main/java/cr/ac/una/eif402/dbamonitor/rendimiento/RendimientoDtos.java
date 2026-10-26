@@ -1,7 +1,7 @@
 package cr.ac.una.eif402.dbamonitor.rendimiento;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /** Objetos de transferencia del Modulo 2: monitoreo de rendimiento. */
@@ -19,7 +19,7 @@ public final class RendimientoDtos {
             long lecturasLogicasTotal,
             long lecturasLogicasPromedio,
             long escriturasTotal,
-            LocalDateTime ultimaEjecucion,
+            OffsetDateTime ultimaEjecucion,
             String textoConsulta
     ) { }
 
@@ -42,8 +42,8 @@ public final class RendimientoDtos {
             long memoriaKb,
             long lecturas,
             long escrituras,
-            LocalDateTime inicioSesion,
-            LocalDateTime ultimaSolicitud,
+            OffsetDateTime inicioSesion,
+            OffsetDateTime ultimaSolicitud,
             String direccionCliente,
             Integer sesionBloqueadora,
             String tipoEspera,

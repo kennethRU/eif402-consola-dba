@@ -1,7 +1,7 @@
 package cr.ac.una.eif402.dbamonitor.respaldo;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /** Objetos de transferencia del Modulo 4: respaldo y recuperacion. */
@@ -11,8 +11,8 @@ public final class RespaldoDtos {
 
     public record RegistroRespaldo(
             String baseDatos,
-            LocalDateTime inicio,
-            LocalDateTime fin,
+            OffsetDateTime inicio,
+            OffsetDateTime fin,
             long duracionSeg,
             String tipoRespaldo,
             String modeloRecuperacion,
@@ -27,9 +27,9 @@ public final class RespaldoDtos {
     public record UltimoRespaldoPorBase(
             String baseDatos,
             String modeloRecuperacion,
-            LocalDateTime ultimoCompleto,
-            LocalDateTime ultimoDiferencial,
-            LocalDateTime ultimoLog,
+            OffsetDateTime ultimoCompleto,
+            OffsetDateTime ultimoDiferencial,
+            OffsetDateTime ultimoLog,
             Integer horasDesdeCompleto,
             String nivelRiesgo,
             String interpretacion
@@ -38,7 +38,7 @@ public final class RespaldoDtos {
     public record EjecucionJob(
             String nombreJob,
             String paso,
-            LocalDateTime fechaEjecucion,
+            OffsetDateTime fechaEjecucion,
             String estado,
             String mensaje
     ) { }

@@ -5,7 +5,6 @@ import cr.ac.una.eif402.dbamonitor.conexion.ProveedorConexiones;
 import cr.ac.una.eif402.dbamonitor.rendimiento.RendimientoDtos.*;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -196,9 +195,5 @@ public class RendimientoRepositorio extends RepositorioAdministrativo {
                 rs.getBigDecimal("espera_total_seg"),
                 rs.getBigDecimal("espera_cpu_seg"),
                 rs.getBigDecimal("porcentaje")));
-    }
-
-    private static java.time.LocalDateTime aFechaHora(Timestamp valor) {
-        return valor == null ? null : valor.toLocalDateTime();
     }
 }

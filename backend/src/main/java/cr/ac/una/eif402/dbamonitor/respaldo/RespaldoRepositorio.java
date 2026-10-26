@@ -6,9 +6,7 @@ import cr.ac.una.eif402.dbamonitor.respaldo.RespaldoDtos.*;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -134,9 +132,5 @@ public class RespaldoRepositorio extends RepositorioAdministrativo {
 
     public String baseDatosActual() {
         return jdbc().queryForObject("SELECT DB_NAME()", String.class);
-    }
-
-    private static LocalDateTime aFechaHora(Timestamp valor) {
-        return valor == null ? null : valor.toLocalDateTime();
     }
 }

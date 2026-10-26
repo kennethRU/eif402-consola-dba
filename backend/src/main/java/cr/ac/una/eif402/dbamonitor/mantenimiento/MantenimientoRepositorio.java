@@ -6,9 +6,7 @@ import cr.ac.una.eif402.dbamonitor.mantenimiento.MantenimientoDtos.*;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -149,9 +147,5 @@ public class MantenimientoRepositorio extends RepositorioAdministrativo {
             sentencia.setObject(1, esquema, Types.NVARCHAR);
             sentencia.setObject(2, objeto, Types.NVARCHAR);
         }, new ColumnMapRowMapper());
-    }
-
-    private static LocalDateTime aFechaHora(Timestamp valor) {
-        return valor == null ? null : valor.toLocalDateTime();
     }
 }

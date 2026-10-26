@@ -6,7 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -20,6 +26,13 @@ import java.util.function.Supplier;
 public abstract class RepositorioAdministrativo {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepositorioAdministrativo.class);
+
+    private static final long VIGENCIA_DESFASE_MS = 10 * 60 * 1000L;
+
+    private record DesfaseCacheado(ZoneOffset desfase, long calculadoEn) { }
+
+    /** Desfase horario del servidor por perfil; el perfil activo cambia en ejecucion. */
+    private static final Map<String, DesfaseCacheado> DESFASES = new ConcurrentHashMap<>();
 
     protected final ProveedorConexiones proveedor;
 
@@ -76,5 +89,28 @@ public abstract class RepositorioAdministrativo {
             return predeterminado;
         }
         return Math.min(solicitado, maximo);
+    }
+
+    /**
+     * Convierte un DATETIME del servidor (sin zona, en hora local del
+     * servidor) a OffsetDateTime usando el desfase real del servidor, de
+     * modo que el navegador muestre la hora correcta.
+     */
+    protected OffsetDateTime aFechaHora(Timestamp valor) {
+        return valor == null ? null : valor.toLocalDateTime().atOffset(desfaseServidor());
+    }
+
+    private ZoneOffset desfaseServidor() {
+        String perfil = proveedor.getPerfilActivo();
+        long ahora = System.currentTimeMillis();
+        DesfaseCacheado cacheado = DESFASES.get(perfil);
+        if (cacheado != null && ahora - cacheado.calculadoEn() < VIGENCIA_DESFASE_MS) {
+            return cacheado.desfase();
+        }
+        Integer minutos = jdbc().queryForObject(
+                "SELECT DATEDIFF(MINUTE, GETUTCDATE(), GETDATE())", Integer.class);
+        ZoneOffset desfase = ZoneOffset.ofTotalSeconds((minutos == null ? 0 : minutos) * 60);
+        DESFASES.put(perfil, new DesfaseCacheado(desfase, ahora));
+        return desfase;
     }
 }

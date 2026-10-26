@@ -1,7 +1,7 @@
 package cr.ac.una.eif402.dbamonitor.mantenimiento;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /** Objetos de transferencia del Modulo 6: mantenimiento preventivo. */
@@ -13,7 +13,7 @@ public final class MantenimientoDtos {
             String esquema,
             String tabla,
             String estadistica,
-            LocalDateTime ultimaActualizacion,
+            OffsetDateTime ultimaActualizacion,
             long filas,
             long filasMuestreadas,
             long modificacionesPendientes,
@@ -37,11 +37,11 @@ public final class MantenimientoDtos {
             String tipoObjeto,
             Integer numeroError,
             String mensajeError,
-            LocalDateTime fechaDeteccion
+            OffsetDateTime fechaDeteccion
     ) { }
 
     public record RegistroBitacora(
-            LocalDateTime fechaEjecucion,
+            OffsetDateTime fechaEjecucion,
             String tipoOperacion,
             String objetoAfectado,
             String resultado,
