@@ -42,7 +42,11 @@ public class AuditoriaServicio {
 
         long sysadmins = logins.stream().filter(LoginServidor::esSysadmin).count();
         if (sysadmins > 2) {
-            hallazgos.add(sysadmins + " logins pertenecen al rol sysadmin");
+            long porGrupo = logins.stream()
+                    .filter(login -> login.esSysadmin() && !login.sysadminDirecto())
+                    .count();
+            hallazgos.add(sysadmins + " logins tienen privilegios sysadmin"
+                    + (porGrupo > 0 ? " (" + porGrupo + " por pertenencia a grupo)" : ""));
         }
 
         boolean saHabilitado = logins.stream()

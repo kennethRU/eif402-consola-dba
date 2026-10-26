@@ -69,7 +69,14 @@ export default function ModuloAuditoria({ controles }) {
                 {
                   clave: 'esSysadmin',
                   encabezado: 'sysadmin',
-                  presentar: (f) => (f.esSysadmin ? <span className={claseMarca('MEDIO')}>Si</span> : 'No')
+                  presentar: (f) => {
+                    if (!f.esSysadmin) return 'No';
+                    return (
+                      <span className={claseMarca('MEDIO')}>
+                        {f.sysadminDirecto ? 'Sí' : 'Sí (vía grupo)'}
+                      </span>
+                    );
+                  }
                 },
                 { clave: 'baseDatosPredeterminada', encabezado: 'BD predeterminada', presentar: (f) => texto(f.baseDatosPredeterminada) },
                 { clave: 'fechaCreacion', encabezado: 'Creado', presentar: (f) => fechaHora(f.fechaCreacion) }
@@ -95,6 +102,9 @@ export default function ModuloAuditoria({ controles }) {
           </Panel>
 
           <Panel titulo="Roles y miembros" fuente="sys.database_role_members · sys.server_role_members" sinRelleno>
+            <p className="indicador__nota" style={{ padding: '8px 14px', margin: 0 }}>
+              Muestra solo asignaciones directas de rol
+            </p>
             <Tabla
               columnas={[
                 { clave: 'ambito', encabezado: 'Ambito' },

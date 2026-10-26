@@ -5,8 +5,6 @@ import cr.ac.una.eif402.dbamonitor.common.RepositorioAdministrativo;
 import cr.ac.una.eif402.dbamonitor.conexion.ProveedorConexiones;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -29,7 +27,13 @@ public class AuditoriaRepositorio extends RepositorioAdministrativo {
                    sp.create_date           AS fecha_creacion,
                    sp.modify_date           AS fecha_modificacion,
                    sp.default_database_name AS base_datos_predeterminada,
-                   ISNULL(IS_SRVROLEMEMBER('sysadmin', sp.name), 0) AS es_sysadmin
+                   ISNULL(IS_SRVROLEMEMBER('sysadmin', sp.name), 0) AS es_sysadmin,
+                   CAST(CASE WHEN EXISTS (
+                            SELECT 1
+                            FROM sys.server_role_members srm
+                            JOIN sys.server_principals r ON r.principal_id = srm.role_principal_id
+                            WHERE r.name = 'sysadmin' AND srm.member_principal_id = sp.principal_id)
+                        THEN 1 ELSE 0 END AS BIT) AS sysadmin_directo
             FROM sys.server_principals sp
             WHERE sp.type IN ('S','U','G') AND sp.name NOT LIKE '##%'
             ORDER BY sp.name
@@ -124,7 +128,8 @@ public class AuditoriaRepositorio extends RepositorioAdministrativo {
                 aFechaHora(rs.getTimestamp("fecha_creacion")),
                 aFechaHora(rs.getTimestamp("fecha_modificacion")),
                 rs.getString("base_datos_predeterminada"),
-                rs.getBoolean("es_sysadmin")));
+                rs.getBoolean("es_sysadmin"),
+                rs.getBoolean("sysadmin_directo")));
     }
 
     public List<UsuarioBaseDatos> usuarios() {
@@ -162,9 +167,5 @@ public class AuditoriaRepositorio extends RepositorioAdministrativo {
                 rs.getString("tipo_objeto"),
                 rs.getString("entidad_referenciada"),
                 rs.getString("diagnostico")));
-    }
-
-    private static LocalDateTime aFechaHora(Timestamp valor) {
-        return valor == null ? null : valor.toLocalDateTime();
     }
 }

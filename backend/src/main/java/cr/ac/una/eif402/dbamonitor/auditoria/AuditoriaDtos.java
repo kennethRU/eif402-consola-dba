@@ -1,6 +1,6 @@
 package cr.ac.una.eif402.dbamonitor.auditoria;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /** Objetos de transferencia del Modulo 5: auditoria. */
@@ -12,16 +12,17 @@ public final class AuditoriaDtos {
             String login,
             String tipo,
             boolean deshabilitado,
-            LocalDateTime fechaCreacion,
-            LocalDateTime fechaModificacion,
+            OffsetDateTime fechaCreacion,
+            OffsetDateTime fechaModificacion,
             String baseDatosPredeterminada,
-            boolean esSysadmin
+            boolean esSysadmin,
+            boolean sysadminDirecto
     ) { }
 
     public record UsuarioBaseDatos(
             String usuario,
             String tipo,
-            LocalDateTime fechaCreacion,
+            OffsetDateTime fechaCreacion,
             String esquemaPredeterminado,
             String loginAsociado,
             String tipoAutenticacion
